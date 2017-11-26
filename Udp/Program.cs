@@ -12,21 +12,19 @@ namespace Udp
     {
         public static string GetProgramName()
         {
-            string text = string.Empty;
-            text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name.ToString();
+            string text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name.ToString();
             return text;
         }
 
         public static string GetProgramFilename()
         {
-            string text = string.Empty;
-            text = Environment.GetCommandLineArgs()[0];
+            string text = Environment.GetCommandLineArgs()[0];
             return text;
         }
 
         public static string GetProgramVersion(bool shortended = false)
         {
-            string text = string.Empty;
+            string text;
             System.Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             if (shortended)
             {
@@ -42,12 +40,15 @@ namespace Udp
 
         public static string GetProgramInfo()
         {
-            string text = string.Empty;
+            string text;
+
             var versionInfo = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
             var name = versionInfo.InternalName;
             var version = GetProgramVersion();
             var trademark = versionInfo.LegalTrademarks;
+
             text = String.Join(Environment.NewLine, new string[] { name, version, trademark });
+
             return text;
         }
 
@@ -58,13 +59,14 @@ namespace Udp
 
         public static string GetHelp(OptionSet options)
         {
-            string text = string.Empty;
+            string text;
 
             using (System.IO.TextWriter writer = new System.IO.StringWriter())
             {
                 writer.WriteLine("Usage:");
                 writer.WriteLine(GetProgramFilename());
                 options.WriteOptionDescriptions(writer);
+
                 text = writer.ToString();
             }
 
