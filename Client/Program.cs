@@ -29,7 +29,7 @@ namespace Client
             List<string> extra = new List<string>();
             try
             {
-                // PSarse the command line
+                // Parse the command line
                 extra = options.Parse(args);
             }
             catch (OptionException e)

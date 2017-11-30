@@ -10,7 +10,8 @@ namespace Server
     public class ClientHandler : Udp.ClientServerHandler
     {
         public string Operation { get; protected set; } = null;
-        public List<int?> Nums { get; protected set; } = new List<int?>(new int?[3]);
+        public List<int> Nums { get; protected set; }
+        public int NumsCounter { get; set; }
 
         public ClientHandler() : base() { }
 
@@ -19,7 +20,7 @@ namespace Server
         {
             base.SessionRestart(session);
             this.Operation = null;
-            this.Nums = new List<int?>(new int?[3]);
+            this.Nums = new List<int>();
         }
 
         public Message ProceedRequest(Message request)
@@ -88,25 +89,25 @@ namespace Server
                     }
 
                     // Handling num values
-                    List<int?> nums = new List<int?>(new int?[3]);
-                    for (int i = 0; i < 3; i++)
+                    string numsCounterString;
+                    request.Fields.TryGetValue("nums", out numsCounterString);
+                    if (numsCounterString != null)
                     {
-                        nums[i] = null;
+                        this.NumsCounter = int.Parse(numsCounterString);
+                    }
+
+                    for (int i = 0; i < this.NumsCounter; i++)
+                    {
                         string numString;
-                        request.Fields.TryGetValue("num" + (i + 1).ToString(), out numString);
+                        request.Fields.TryGetValue($"num{i + 1}".ToString(), out numString);
 
                         if (numString != null)
                         {
                             int num = 0;
                             if (int.TryParse(numString, out num))
                             {
-                                nums[i] = num;
+                                this.Nums.Add(num);
                             }
-                        }
-
-                        if (nums[i] != null)
-                        {
-                            this.Nums[i] = nums[i];
                         }
                     }
 
@@ -116,7 +117,7 @@ namespace Server
                         string ok = "0";
                         int result = 0;
 
-                        if (this.Nums != null && this.Nums.Count >= 3 && this.Nums[0] != null && this.Nums[1] != null && this.Nums[2] != null)
+                        if (this.Nums != null && this.Nums.Count >= 3)
                         {
                             if (this.Operation != null)
                             {
@@ -126,19 +127,19 @@ namespace Server
 
                                 if (operationparse == "mnozenie")
                                 {
-                                    result = this.Nums[0].Value * this.Nums[1].Value * this.Nums[2].Value;
+                                    result = Multiplication();
                                 }
                                 else if (operationparse == "dodawanie")
                                 {
-                                    result = this.Nums[0].Value + this.Nums[1].Value + this.Nums[2].Value;
+                                    result = Addition();
                                 }
                                 else if (operationparse == "lub")
                                 {
-                                    result = this.Nums[0].Value | this.Nums[1].Value | this.Nums[2].Value;
+                                    result = LogicOr();
                                 }
                                 else if (operationparse == "i")
                                 {
-                                    result = this.Nums[0].Value & this.Nums[1].Value & this.Nums[2].Value;
+                                    result = LogicAnd();
                                 }
                                 else
                                 {
@@ -159,6 +160,52 @@ namespace Server
                 }
             }
             return message;
+        }
+
+        private int Addition()
+        {
+            int result = 0;
+
+            foreach (var arg in this.Nums)
+            {
+                result += arg;
+            }
+            return result;
+        }
+
+        private int Multiplication()
+        {
+            int result = 1;
+
+            foreach (var arg in this.Nums)
+            {
+                result *= arg;
+            }
+            return result;
+        }
+
+        private int LogicOr()
+        {
+            int result = 0;
+
+            foreach (var arg in this.Nums)
+            {
+                result |= arg;
+            }
+
+            return result;
+        }
+
+        private int LogicAnd()
+        {
+            int result = 1;
+
+            foreach (var arg in this.Nums)
+            {
+                result &= arg;
+            }
+
+            return result;
         }
     }
 }

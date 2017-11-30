@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using Udp;
 
 namespace Client
@@ -120,25 +118,23 @@ namespace Client
 
         public OperationCommand ParseInput(string input)
         {
-            OperationCommand cmd;
-
-            cmd = new OperationCommand();
+            OperationCommand cmd = new OperationCommand();
 
             string[] strs = input.Split(' ');
-            if (strs.Length == 4)
+            if (strs.Length >= 0)
             {
                 cmd.Operation = strs[0];
+                List<int> arguments = new List<int>();
+                int args = 1;
 
-                int[] nums = new int[3];
-                for (int i = 0; i < 3; i++)
+                for (int i = 1; i < strs.Length; i++)
                 {
-                    nums[i] = 0;
-                    int.TryParse(strs[i + 1], out nums[i]);
+                    arguments.Add(int.Parse(strs[args]));
+                    args++;
                 }
 
-                cmd.Num1 = nums[0];
-                cmd.Num2 = nums[1];
-                cmd.Num3 = nums[2];
+                cmd.Nums = arguments;
+                cmd.NumsLength = args;
             }
 
             return cmd;
