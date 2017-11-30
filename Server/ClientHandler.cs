@@ -12,6 +12,7 @@ namespace Server
         public string Operation { get; protected set; } = null;
         public List<int> Nums { get; protected set; }
         public int NumsCounter { get; set; }
+        public bool End { get; set; }
 
         public ClientHandler() : base() { }
 
@@ -88,6 +89,8 @@ namespace Server
                         this.Operation = operation;
                     }
 
+                    GetResponseEnd(request);
+
                     // Handling num values
                     string numsCounterString;
                     request.Fields.TryGetValue("nums", out numsCounterString);
@@ -152,6 +155,11 @@ namespace Server
                         message.Fields["dane"] = result.ToString();
                     }
 
+                    if (this.End == true)
+                    {
+                        this.Nums.Clear();
+                    }
+
                     if (status != null && status == "byes")
                     {
                         message.Fields["wiad"] = "byeu";
@@ -160,6 +168,16 @@ namespace Server
                 }
             }
             return message;
+        }
+
+        private void GetResponseEnd(Message request)
+        {
+            string endString;
+            request.Fields.TryGetValue("end", out endString);
+            if (endString != null)
+            {
+                this.End = bool.Parse(endString);
+            }
         }
 
         private int Addition()

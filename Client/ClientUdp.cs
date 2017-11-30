@@ -129,14 +129,23 @@ namespace Client
 
                 for (int i = 1; i < strs.Length; i++)
                 {
+                    if (strs[i] == "end")
+                    {
+                        cmd.End = true;
+                        break;
+                    }
                     arguments.Add(int.Parse(strs[args]));
                     args++;
+
+                    if (args > 3)
+                    {
+                        cmd.End = false;
+                    }
                 }
 
                 cmd.Nums = arguments;
                 cmd.NumsLength = args;
             }
-
             return cmd;
         }
     }

@@ -71,6 +71,7 @@ namespace Client
             }
 
             message.Fields["stat"] = "wynik";
+            message.Fields["end"] = cmd.End.ToString();
 
             return message;
         }
