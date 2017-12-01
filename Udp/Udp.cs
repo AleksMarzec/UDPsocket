@@ -22,10 +22,5 @@ namespace Udp
             this.Address = address;
             this.Port = port;
         }
-
-        public virtual int Run(bool verbose = false)
-        {
-            return 0;
-        }
     }
 }

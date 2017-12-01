@@ -9,144 +9,80 @@ namespace Client
 {
     public class ClientUdp : Udp.Udp
     {
-        public ClientUdp(System.Net.IPAddress address, int port) : base(address, port) { }
+        private byte[] data { get; set; }
+        IPEndPoint ipep;
+        UdpClient socket { get; set; }
+        ServerHandler server { get; set; }
+
+        public ClientUdp(System.Net.IPAddress address, int port) : base(address, port)
+        {
+            data = new byte[0];
+            ipep = new IPEndPoint(this.Address, this.Port);
+            socket = new UdpClient(ipep.Address.ToString(), ipep.Port);
+            server = new ServerHandler(Guid.NewGuid().ToString());
+        }
 
         // - socket
         // - connect
 
-        public override int Run(bool verbose = false)
+        public Tuple<string, string> Connect()
         {
-            byte[] data = new byte[0];
-            string input;
-            string stringData;
-
-            IPEndPoint ipep = new IPEndPoint(this.Address, this.Port);
-
-            UdpClient socket = new UdpClient(ipep.Address.ToString(), ipep.Port);
-
-            if (verbose)
-            {
-                Console.Out.WriteLine("Ready to send data...");
-            }
-
-            ServerHandler server = new ServerHandler(Guid.NewGuid().ToString());
-
             // Starts session
             Message messageBegin = server.CreateMessageBegin();
             string messageBeginString = MessageSerializer.Serialize(messageBegin);
             data = Encoding.ASCII.GetBytes(messageBeginString);
 
-            if (verbose)
-            {
-                Console.Out.WriteLine("> {0}: {1}", ipep.ToString(), Encoding.ASCII.GetString(data));
-            }
-
             socket.Send(data, data.Length);
+            string sended = ($"> {ipep.ToString()}: {Encoding.ASCII.GetString(data)}");
+
             data = socket.Receive(ref ipep);
-            stringData = Encoding.ASCII.GetString(data, 0, data.Length);
+            string stringData = Encoding.ASCII.GetString(data, 0, data.Length);
+            string received = ($"< {ipep.ToString()}: {stringData}");
 
-            if (verbose)
+            return new Tuple<string, string>(sended, received);
+        }
+
+        public Tuple<string, string, string> Run(OperationCommand Parameters)
+        {
+            Message message = server.CreateMessageRequest(Parameters);
+            string messageString = MessageSerializer.Serialize(message);
+
+            data = Encoding.ASCII.GetBytes(messageString);
+            socket.Send(data, data.Length);
+            string sended = ($"> {ipep.ToString()}: {Encoding.ASCII.GetString(data)}");
+
+            data = socket.Receive(ref ipep);
+            string stringData = Encoding.ASCII.GetString(data, 0, data.Length);
+            string received = ($"< {ipep.ToString()}: {stringData}");
+
+            Message response = MessageSerializer.Deserialize(stringData);
+            string responsedata = "blad";
+            if (response != null && response.Fields != null)
             {
-                Console.Out.WriteLine("< {0}: {1}", ipep.ToString(), stringData);
+                response.Fields.TryGetValue("dane", out responsedata);
             }
 
-            while ((input = Console.In.ReadLine()) != null)
-            {
-                if (string.IsNullOrEmpty(input))
-                {
-                    continue;
-                }
+            return new Tuple<string, string, string>(sended, received, responsedata);
+        }
 
-                OperationCommand cmd = ParseInput(input);
-                Message message = server.CreateMessageRequest(cmd);
-                string messageString = MessageSerializer.Serialize(message);
-
-                data = Encoding.ASCII.GetBytes(messageString);
-
-                if (verbose)
-                {
-                    Console.Out.WriteLine("> {0}: {1}", ipep.ToString(), Encoding.ASCII.GetString(data));
-                }
-
-                socket.Send(data, data.Length);
-                data = socket.Receive(ref ipep);
-                stringData = Encoding.ASCII.GetString(data, 0, data.Length);
-
-                if (verbose)
-                {
-                    Console.Out.WriteLine("< {0}: {1}", ipep.ToString(), stringData);
-                }
-
-                Message response = MessageSerializer.Deserialize(stringData);
-                if (response != null && response.Fields != null)
-                {
-                    string reponsedata = null;
-                    response.Fields.TryGetValue("dane", out reponsedata);
-                    if (reponsedata != null)
-                    {
-                        Console.Out.WriteLine(reponsedata);
-                    }
-                }
-            }
-
+        public Tuple<string, string> EndConnection()
+        {
             Message messageEnd = server.CreateMessageEnd();
             string messageEndString = MessageSerializer.Serialize(messageEnd);
             data = Encoding.ASCII.GetBytes(messageEndString);
+            string sended = ($"> {ipep.ToString()}: {Encoding.ASCII.GetString(data)}");
 
-            if (verbose)
-            {
-                Console.Out.WriteLine("> {0}: {1}", ipep.ToString(), Encoding.ASCII.GetString(data));
-            }
 
             socket.Send(data, data.Length);
             data = socket.Receive(ref ipep);
-            stringData = Encoding.ASCII.GetString(data, 0, data.Length);
+            string stringData = Encoding.ASCII.GetString(data, 0, data.Length);
 
-            if (verbose)
-            {
-                Console.Out.WriteLine("< {0}: {1}", ipep.ToString(), stringData);
-            }
+         
+            string received = ($"< {ipep.ToString()}: {stringData}");
 
-            if (verbose)
-            {
-                Console.Out.WriteLine("[i] Stopping client");
-            }
             socket.Close();
-
-            return 0;
+            return new Tuple<string, string>(sended, received);
         }
 
-        public OperationCommand ParseInput(string input)
-        {
-            OperationCommand cmd = new OperationCommand();
-
-            string[] strs = input.Split(' ');
-            if (strs.Length >= 0)
-            {
-                cmd.Operation = strs[0];
-                List<int> arguments = new List<int>();
-                int args = 1;
-
-                for (int i = 1; i < strs.Length; i++)
-                {
-                    if (strs[i] == "end")
-                    {
-                        cmd.End = true;
-                        break;
-                    }
-                    arguments.Add(int.Parse(strs[args]));
-                    args++;
-
-                    if (args > 3)
-                    {
-                        cmd.End = false;
-                    }
-                }
-
-                cmd.Nums = arguments;
-                cmd.NumsLength = args;
-            }
-            return cmd;
-        }
     }
 }

@@ -90,7 +90,7 @@ namespace Server
             }
 
             ServerUdp server = new ServerUdp(address, port);
-            status = server.Run(verbose);
+            status = server.Connect();
             Environment.Exit(status);
         }
     }

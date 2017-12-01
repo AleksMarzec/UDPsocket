@@ -54,20 +54,17 @@ namespace Client
         public Message CreateMessageRequest(OperationCommand cmd)
         {
             Message message = CreateMessageRequest();
-            int numsCounter;
 
             if (cmd != null)
             {
-                numsCounter = 0;
                 message.Fields["oper"] = cmd.Operation;
 
                 for (int i = 1; i <= cmd.Nums.Count; i++)
                 {
                     message.Fields[$"num{i}"] = cmd.Nums.ElementAt(i - 1).ToString();
-                    numsCounter++;
                 }
 
-                message.Fields["nums"] = numsCounter.ToString();
+                message.Fields["nums"] = cmd.NumsLength.ToString();
             }
 
             message.Fields["stat"] = "wynik";

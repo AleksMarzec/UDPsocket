@@ -18,7 +18,7 @@ namespace Server
         // 3. listen
         // 4. accept
 
-        public override int Run(bool verbose = false)
+        public int Connect()
         {
             string stringData;
             byte[] data = new byte[0];
@@ -30,10 +30,8 @@ namespace Server
 
             IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
 
-            if (verbose)
-            {
-                Console.Out.WriteLine("Waiting for a client...");
-            }
+            Console.Out.WriteLine("Waiting for a client...");
+
 
             // Dictionary of connected clients
             Dictionary<string, ClientHandler> clients = new Dictionary<string, ClientHandler>();
@@ -43,10 +41,8 @@ namespace Server
                 data = socket.Receive(ref sender);
                 stringData = Encoding.ASCII.GetString(data, 0, data.Length);
 
-                if (verbose)
-                {
-                    Console.Out.WriteLine("< {0}: {1}", sender.ToString(), stringData);
-                }
+                Console.Out.WriteLine("< {0}: {1}", sender.ToString(), stringData);
+
 
                 Message message = MessageSerializer.Deserialize(stringData);
 
@@ -59,10 +55,8 @@ namespace Server
                 string responseString = MessageSerializer.Serialize(response);
                 data = Encoding.ASCII.GetBytes(responseString);
 
-                if (verbose)
-                {
-                    Console.Out.WriteLine("> {0}: {1}", sender.ToString(), Encoding.ASCII.GetString(data));
-                }
+                Console.Out.WriteLine("> {0}: {1}", sender.ToString(), Encoding.ASCII.GetString(data));
+
 
                 socket.Send(data, data.Length, sender);
 
