@@ -30,7 +30,7 @@ namespace Udp
             this.Nums = nums;
         }
 
-        public void ParseInput(string input)
+        public void ParseInputNums(string input)
         {
             string[] strs = input.Split(' ');
             if (strs.Length >= 0)
@@ -42,6 +42,31 @@ namespace Udp
                     this.Nums.Add(int.Parse(strs[i]));
                 }
                 this.NumsLength = Nums.Count();
+            }
+        }
+
+        public void ParseInputOperation(string input)
+        {
+            input.ToLower();
+            if (input == "dodawanie")
+            {
+                this.Operation = "dodawanie";
+            }
+            else if (input == "mnożenie")
+            {
+                this.Operation = "mnozenie";
+            }
+            else if (input == "logiczne \"lub\"")
+            {
+                this.Operation = "logicznelub";
+            }
+            else if (input == "logiczne \"i\"")
+            {
+                this.Operation = "logicznei";
+            }
+            else
+            {
+                this.Operation = "bladoperacji";
             }
         }
 

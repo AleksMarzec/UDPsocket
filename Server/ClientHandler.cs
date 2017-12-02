@@ -128,19 +128,19 @@ namespace Server
 
                                 ok = "1";
 
-                                if (operationparse == "mnozenie")
-                                {
-                                    result = Multiplication();
-                                }
-                                else if (operationparse == "dodawanie")
+                                if (operationparse == "dodawanie")
                                 {
                                     result = Addition();
                                 }
-                                else if (operationparse == "lub")
+                                else if (operationparse == "mnozenie")
+                                {
+                                    result = Multiplication();
+                                }
+                                else if (operationparse == "logicznelub")
                                 {
                                     result = LogicOr();
                                 }
-                                else if (operationparse == "i")
+                                else if (operationparse == "logicznei")
                                 {
                                     result = LogicAnd();
                                 }

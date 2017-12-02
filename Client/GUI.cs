@@ -57,9 +57,9 @@ namespace Client
 
                 this.Client = new ClientUdp(this.IpAddress, this.Port);
                 this.Connected = true;
-                Tuple<string, string> packetsString = this.Client.Connect();
+                Tuple<string, string> packetsTuple = this.Client.Connect();
 
-                OstatnieKomunikatyWypiszLabel.Text = packetsString.Item1 + Environment.NewLine + packetsString.Item2;
+                OstatnieKomunikatyWypiszLabel.Text = packetsTuple.Item1 + Environment.NewLine + packetsTuple.Item2;
 
             }
             catch (FormatException fEx)
@@ -79,10 +79,8 @@ namespace Client
             try
             {
                 OperationCommand parameters = new OperationCommand();
-                parameters.ParseInput(LiczbyTextBox.Text); // exception for empty operation
-                parameters.Operation = OperacjaComboBox.SelectedItem.ToString();
-
-                this.Client.Run(parameters);
+                parameters.ParseInputNums(LiczbyTextBox.Text); // exception for empty operation
+                parameters.ParseInputOperation(OperacjaComboBox.Text.ToString());
 
                 if (OstatniKomunikatCheckBox.Checked)
                 {
@@ -92,16 +90,19 @@ namespace Client
                 {
                     parameters.End = false;
                 }
+
+                Tuple<string, string, string> packetsTuple= this.Client.Run(parameters);
+
+                OstatnieKomunikatyWypiszLabel.Text = packetsTuple.Item1.ToString() + Environment.NewLine + packetsTuple.Item2.ToString();
+                WynikOdpowiedzLabel.Text = packetsTuple.Item3.ToString();
             }
             catch (FormatException fEx)
             {
                 MessageBox.Show(fEx.Message);
-                MessageBox.Show("wyslij");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                MessageBox.Show("wyslij");
             }
         }
 
@@ -124,25 +125,15 @@ namespace Client
             int port = 0;
             try
             {
-                if (int.TryParse(PortTextBox.Text, out port))
-                {
-                    MessageBox.Show("sparsowane");
-                }
-                else
-                {
-                    MessageBox.Show("niesparsowane");
-
-                }
-            }
+                int.TryParse(PortTextBox.Text, out port);
+              }
             catch (FormatException fEx)
             {
-                MessageBox.Show(fEx.Message);
-                MessageBox.Show("port");
+                MessageBox.Show("Port", fEx.Message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                MessageBox.Show("port");
+                MessageBox.Show("Port", ex.Message);
             }
 
             this.Port = port;
@@ -156,8 +147,7 @@ namespace Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                MessageBox.Show("adres");
+                MessageBox.Show("Adres IP", ex.Message);
             }
         }
 
