@@ -30,8 +30,9 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.panelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PortLabel = new System.Windows.Forms.Label();
             this.PortTextBox = new System.Windows.Forms.TextBox();
             this.IpAddressLabel = new System.Windows.Forms.Label();
@@ -45,9 +46,10 @@
             this.WynikLabel = new System.Windows.Forms.Label();
             this.WynikOdpowiedzLabel = new System.Windows.Forms.Label();
             this.OstatnieKomunikatyLabel = new System.Windows.Forms.Label();
-            this.OstatnieKomunikatyWypiszLabel = new System.Windows.Forms.Label();
             this.PolaczButton = new System.Windows.Forms.Button();
             this.RozlaczButton = new System.Windows.Forms.Button();
+            this.OstatnieKomunikatyWypiszTextBox = new System.Windows.Forms.RichTextBox();
+            this.Domyslnie3LiczbyCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +57,6 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.panelToolStripMenuItem,
-            this.aboutToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -69,17 +70,27 @@
             this.panelToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.panelToolStripMenuItem.Text = "Panel";
             // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.infoToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Text = "Info";
             // 
             // PortLabel
             // 
@@ -120,7 +131,7 @@
             // OperacjaLabel
             // 
             this.OperacjaLabel.AutoSize = true;
-            this.OperacjaLabel.Location = new System.Drawing.Point(12, 179);
+            this.OperacjaLabel.Location = new System.Drawing.Point(12, 240);
             this.OperacjaLabel.Name = "OperacjaLabel";
             this.OperacjaLabel.Size = new System.Drawing.Size(53, 13);
             this.OperacjaLabel.TabIndex = 5;
@@ -135,7 +146,7 @@
             "mnożenie",
             "logiczne lub",
             "logiczne i"});
-            this.OperacjaComboBox.Location = new System.Drawing.Point(89, 176);
+            this.OperacjaComboBox.Location = new System.Drawing.Point(89, 237);
             this.OperacjaComboBox.Name = "OperacjaComboBox";
             this.OperacjaComboBox.Size = new System.Drawing.Size(121, 21);
             this.OperacjaComboBox.TabIndex = 6;
@@ -143,7 +154,7 @@
             // LiczbyLabel
             // 
             this.LiczbyLabel.AutoSize = true;
-            this.LiczbyLabel.Location = new System.Drawing.Point(12, 224);
+            this.LiczbyLabel.Location = new System.Drawing.Point(12, 278);
             this.LiczbyLabel.Name = "LiczbyLabel";
             this.LiczbyLabel.Size = new System.Drawing.Size(40, 13);
             this.LiczbyLabel.TabIndex = 7;
@@ -151,15 +162,16 @@
             // 
             // LiczbyTextBox
             // 
-            this.LiczbyTextBox.Location = new System.Drawing.Point(89, 221);
+            this.LiczbyTextBox.Location = new System.Drawing.Point(89, 275);
             this.LiczbyTextBox.Name = "LiczbyTextBox";
             this.LiczbyTextBox.Size = new System.Drawing.Size(179, 20);
             this.LiczbyTextBox.TabIndex = 8;
+            this.LiczbyTextBox.TextChanged += new System.EventHandler(this.LiczbyTextBox_TextChanged);
             // 
             // OstatniKomunikatCheckBox
             // 
             this.OstatniKomunikatCheckBox.AutoSize = true;
-            this.OstatniKomunikatCheckBox.Location = new System.Drawing.Point(306, 224);
+            this.OstatniKomunikatCheckBox.Location = new System.Drawing.Point(302, 277);
             this.OstatniKomunikatCheckBox.Name = "OstatniKomunikatCheckBox";
             this.OstatniKomunikatCheckBox.Size = new System.Drawing.Size(111, 17);
             this.OstatniKomunikatCheckBox.TabIndex = 9;
@@ -203,15 +215,6 @@
             this.OstatnieKomunikatyLabel.TabIndex = 13;
             this.OstatnieKomunikatyLabel.Text = "Ostatnie komunikaty:";
             // 
-            // OstatnieKomunikatyWypiszLabel
-            // 
-            this.OstatnieKomunikatyWypiszLabel.AutoSize = true;
-            this.OstatnieKomunikatyWypiszLabel.Location = new System.Drawing.Point(508, 78);
-            this.OstatnieKomunikatyWypiszLabel.Name = "OstatnieKomunikatyWypiszLabel";
-            this.OstatnieKomunikatyWypiszLabel.Size = new System.Drawing.Size(16, 13);
-            this.OstatnieKomunikatyWypiszLabel.TabIndex = 14;
-            this.OstatnieKomunikatyWypiszLabel.Text = "---";
-            // 
             // PolaczButton
             // 
             this.PolaczButton.Location = new System.Drawing.Point(89, 127);
@@ -232,14 +235,34 @@
             this.RozlaczButton.UseVisualStyleBackColor = true;
             this.RozlaczButton.Click += new System.EventHandler(this.RozlaczButton_Click);
             // 
+            // OstatnieKomunikatyWypiszTextBox
+            // 
+            this.OstatnieKomunikatyWypiszTextBox.Location = new System.Drawing.Point(511, 68);
+            this.OstatnieKomunikatyWypiszTextBox.Name = "OstatnieKomunikatyWypiszTextBox";
+            this.OstatnieKomunikatyWypiszTextBox.Size = new System.Drawing.Size(398, 223);
+            this.OstatnieKomunikatyWypiszTextBox.TabIndex = 17;
+            this.OstatnieKomunikatyWypiszTextBox.Text = "";
+            // 
+            // Domyslnie3LiczbyCheckBox
+            // 
+            this.Domyslnie3LiczbyCheckBox.AutoSize = true;
+            this.Domyslnie3LiczbyCheckBox.Location = new System.Drawing.Point(15, 190);
+            this.Domyslnie3LiczbyCheckBox.Name = "Domyslnie3LiczbyCheckBox";
+            this.Domyslnie3LiczbyCheckBox.Size = new System.Drawing.Size(207, 17);
+            this.Domyslnie3LiczbyCheckBox.TabIndex = 18;
+            this.Domyslnie3LiczbyCheckBox.Text = "Domyślnie wysyłaj 3 liczby/komunikat.";
+            this.Domyslnie3LiczbyCheckBox.UseVisualStyleBackColor = true;
+            this.Domyslnie3LiczbyCheckBox.CheckedChanged += new System.EventHandler(this.Domyslnie3LiczbyCheckBox_CheckedChanged);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(921, 463);
+            this.Controls.Add(this.Domyslnie3LiczbyCheckBox);
+            this.Controls.Add(this.OstatnieKomunikatyWypiszTextBox);
             this.Controls.Add(this.RozlaczButton);
             this.Controls.Add(this.PolaczButton);
-            this.Controls.Add(this.OstatnieKomunikatyWypiszLabel);
             this.Controls.Add(this.OstatnieKomunikatyLabel);
             this.Controls.Add(this.WynikOdpowiedzLabel);
             this.Controls.Add(this.WynikLabel);
@@ -256,7 +279,8 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "GUI";
-            this.Text = "GUI";
+            this.Text = "Client";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -268,7 +292,6 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem panelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Label PortLabel;
         private System.Windows.Forms.TextBox PortTextBox;
@@ -283,8 +306,11 @@
         private System.Windows.Forms.Label WynikLabel;
         private System.Windows.Forms.Label WynikOdpowiedzLabel;
         private System.Windows.Forms.Label OstatnieKomunikatyLabel;
-        private System.Windows.Forms.Label OstatnieKomunikatyWypiszLabel;
         private System.Windows.Forms.Button PolaczButton;
         private System.Windows.Forms.Button RozlaczButton;
+        private System.Windows.Forms.RichTextBox OstatnieKomunikatyWypiszTextBox;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
+        private System.Windows.Forms.CheckBox Domyslnie3LiczbyCheckBox;
     }
 }
