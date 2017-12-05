@@ -8,13 +8,13 @@ namespace Udp
 {
     public abstract class Udp
     {
-        // IP Address
+        // Adres IP
         public System.Net.IPAddress Address { get; set; }
 
-        // Port number
+        // Numer portu
         public int Port { get; set; }
 
-        // Size of packet / buffor for sending and receiving data
+        // Rozmiar bufora służącego do odbioru i odczytu danych / rozmiar komunikatu
         public int Size { get; protected set; } = 1024;
 
         public Udp(System.Net.IPAddress address, int port)

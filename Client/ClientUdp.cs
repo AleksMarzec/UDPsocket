@@ -75,9 +75,9 @@ namespace Client
 
             socket.Send(data, data.Length);
             data = socket.Receive(ref ipep);
+
             string stringData = Encoding.ASCII.GetString(data, 0, data.Length);
 
-         
             string received = ($"< {ipep.ToString()}: {stringData}");
 
             socket.Close();

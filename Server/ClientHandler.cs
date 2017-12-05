@@ -42,7 +42,7 @@ namespace Server
                 else
                 {
                     string identifier;
-                    request.Fields.TryGetValue("iden", out identifier);
+                    request.Fields.TryGetValue(ProtocolStrings.SessionField, out identifier);
 
                     // Other identifier restars session
                     if (identifier != this.Session)
@@ -56,34 +56,35 @@ namespace Server
                         }
                         else
                         {
-                            message.Fields["iden"] = this.Session;
+                            message.Fields[ProtocolStrings.SessionField] = this.Session;
                         }
                     }
 
-                    // Counter, identifier of operations
-                    string counter;
-                    request.Fields.TryGetValue("licz", out counter);
+                    // Licznik, identyfikator operacji
+                    string counter = null;
+                    request.Fields.TryGetValue(ProtocolStrings.CounterField, out counter);
 
+                    // Przepisuje identyfikator operacji jeśli jest różny od null
                     if (counter != null)
                     {
-                        message.Fields["licz"] = counter;
+                        message.Fields[ProtocolStrings.CounterField] = counter;
                     }
 
-                    // Status field. Defines executing command. 
-                    // Session start, session end, doing some calculations.
+                    // Pole statusu. Definiuję wykonywaną komendę.
+                    // Przykłady: start sesji, kończenie sesji, wykonywanie obliczeń.
                     string status;
-                    request.Fields.TryGetValue("stat", out status);
+                    request.Fields.TryGetValue(ProtocolStrings.RequestField, out status);
 
-                    if (status != null && status == "hsrv")
+                    if (status != null && status == ProtocolStrings.ResponseFieldHelloAction)
                     {
-                        message.Fields["wiad"] = "husr";
+                        message.Fields[ProtocolStrings.ResponseField] = ProtocolStrings.ResponseFieldHelloAction;
                         SessionRestart(identifier);
                     }
 
-                    // Operation field.
-                    // Add values, multiply values, or, and.
-                    string operation;
-                    request.Fields.TryGetValue("oper", out operation);
+                    // Pole operatora
+                    // Definiuje operację która ma zostać przeprowadzona na argumentach liczbowych.
+                    string operation = null;
+                    request.Fields.TryGetValue(ProtocolStrings.OperationField, out operation);
                     if (operation != null)
                     {
                         this.Operation = operation;
@@ -93,7 +94,7 @@ namespace Server
 
                     // Handling num values
                     string numsCounterString;
-                    request.Fields.TryGetValue("nums", out numsCounterString);
+                    request.Fields.TryGetValue(ProtocolStrings.ArgCounterField, out numsCounterString);
                     if (numsCounterString != null)
                     {
                         this.NumsCounter = int.Parse(numsCounterString);
@@ -102,7 +103,7 @@ namespace Server
                     for (int i = 0; i < this.NumsCounter; i++)
                     {
                         string numString;
-                        request.Fields.TryGetValue($"num{i + 1}".ToString(), out numString);
+                        request.Fields.TryGetValue($"{ProtocolStrings.ArgField}{i + 1}".ToString(), out numString);
 
                         if (numString != null)
                         {
@@ -114,13 +115,14 @@ namespace Server
                         }
                     }
 
-                    if (status != null && status == "wynik")
+                    if (status != null && status == ProtocolStrings.RequestFieldOperationAction)
                     {
-                        message.Fields["wiad"] = "result";
+                        message.Fields[ProtocolStrings.ResponseField] = ProtocolStrings.ResponseFieldResultAction;
+
                         string ok = "0";
                         int result = 0;
 
-                        if (this.Nums != null && this.Nums.Count >= 3)
+                        if (this.Nums != null)
                         {
                             if (this.Operation != null)
                             {
@@ -151,8 +153,8 @@ namespace Server
                             }
                         }
 
-                        message.Fields["okej"] = ok;
-                        message.Fields["dane"] = result.ToString();
+                        message.Fields[ProtocolStrings.StatusField] = ok;
+                        message.Fields[ProtocolStrings.ResultField] = result.ToString();
                     }
 
                     if (this.End == true)
@@ -160,9 +162,10 @@ namespace Server
                         this.Nums.Clear();
                     }
 
-                    if (status != null && status == "byes")
+                    if (status != null && status == ProtocolStrings.RequestFieldGoodbyeAction)
                     {
-                        message.Fields["wiad"] = "byeu";
+                        // Wymusza zakończenie sesji
+                        message.Fields[ProtocolStrings.ResponseField] = ProtocolStrings.ResponseFieldGoodbyeAction;
                         SessionRestart(identifier);
                     }
                 }

@@ -31,7 +31,7 @@ namespace Client
         {
             SessionRestart(session);
             Message message = CreateMessageRequest();
-            message.Fields["stat"] = "hsrv";
+            message.Fields[ProtocolStrings.RequestField] = ProtocolStrings.RequestFieldHelloAction;
             return message;
         }
 
@@ -39,7 +39,7 @@ namespace Client
         {
             Message message = CreateMessageRequest();
             SessionRestart(this.Session);
-            message.Fields["stat"] = "byes";
+            message.Fields[ProtocolStrings.RequestField] = ProtocolStrings.RequestFieldGoodbyeAction;
             return message;
         }
 
@@ -47,7 +47,7 @@ namespace Client
         {
             this.Counter++;
             Message message = CreateMessage();
-            message.Fields["licz"] = this.Counter.ToString();
+            message.Fields[ProtocolStrings.CounterField] = this.Counter.ToString();
             return message;
         }
 
@@ -57,17 +57,17 @@ namespace Client
 
             if (cmd != null)
             {
-                message.Fields["oper"] = cmd.Operation;
+                message.Fields[ProtocolStrings.OperationField] = cmd.Operation.ToString();
 
                 for (int i = 1; i <= cmd.Nums.Count; i++)
                 {
-                    message.Fields[$"num{i}"] = cmd.Nums.ElementAt(i - 1).ToString();
+                    message.Fields[$"{ProtocolStrings.ArgField}{i}"] = cmd.Nums.ElementAt(i - 1).ToString();
                 }
 
-                message.Fields["nums"] = cmd.NumsLength.ToString();
+                message.Fields[ProtocolStrings.ArgCounterField] = cmd.NumsLength.ToString();
             }
 
-            message.Fields["stat"] = "wynik";
+            message.Fields[ProtocolStrings.RequestField] = ProtocolStrings.RequestFieldOperationAction;
             message.Fields["end"] = cmd.End.ToString();
 
             return message;

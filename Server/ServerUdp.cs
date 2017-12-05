@@ -60,12 +60,12 @@ namespace Server
 
                 socket.Send(data, data.Length, sender);
 
-                // Deleting client from dictionary
+                // Usuwanie klienta ze słownika na zakończenie sesji.
                 if (response != null && response.Fields != null)
                 {
                     string msg;
-                    response.Fields.TryGetValue("wiad", out msg);
-                    if (msg == "byeu")
+                    response.Fields.TryGetValue(ProtocolStrings.ResponseField, out msg);
+                    if (msg == ProtocolStrings.ResponseFieldGoodbyeAction)
                     {
                         clients.Remove(sender.ToString());
                     }

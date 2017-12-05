@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Udp;
 
@@ -61,7 +54,7 @@ namespace Client
                 this.Connected = true;
                 Tuple<string, string> packetsTuple = this.Client.Connect();
 
-                OstatnieKomunikatyWypiszTextBox.Text = packetsTuple.Item1 + Environment.NewLine + packetsTuple.Item2;
+                OstatnieKomunikatyWypiszTextBox.Text = packetsTuple.Item1 + Environment.NewLine + Environment.NewLine + packetsTuple.Item2;
 
             }
             catch (FormatException fEx)
@@ -117,7 +110,7 @@ namespace Client
 
                 Tuple<string, string, string> packetsTuple = this.Client.Run(parameters);
 
-                OstatnieKomunikatyWypiszTextBox.Text = packetsTuple.Item1 + Environment.NewLine + packetsTuple.Item2;
+                OstatnieKomunikatyWypiszTextBox.Text = packetsTuple.Item1 + Environment.NewLine + Environment.NewLine + packetsTuple.Item2;
                 WynikOdpowiedzLabel.Text = packetsTuple.Item3.ToString();
             }
             catch (FormatException fEx)
@@ -140,7 +133,7 @@ namespace Client
             else
             {
                 Tuple<string, string> packetsTuple = this.Client.EndConnection();
-                OstatnieKomunikatyWypiszTextBox.Text = packetsTuple.Item1 + Environment.NewLine + packetsTuple.Item2;
+                OstatnieKomunikatyWypiszTextBox.Text = packetsTuple.Item1 + Environment.NewLine + Environment.NewLine + packetsTuple.Item2;
                 this.Connected = false;
             }
         }
@@ -207,14 +200,15 @@ namespace Client
         {
             if (MessageBox.Show("Czy na pewno chcesz wyjść z aplikacji?\nJeśli jesteś połączony z serwerem zostaniesz automatycznie rozłączony.", "Zamykanie aplikacji", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
+                if (this.Connected)
+                {
+                    this.RozlaczButton_Click(sender, e);
+                    this.Connected = false;
+                }
+
                 e.Cancel = true;
             }
 
-            if (Connected)
-            {
-                this.RozlaczButton_Click(sender, e);
-                this.Connected = false;
-            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

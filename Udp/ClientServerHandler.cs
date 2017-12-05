@@ -26,10 +26,10 @@ namespace Udp
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            dictionary["czas"] = ClientServerHelper.GetTimeStamp();
+            dictionary[ProtocolStrings.TimeField] = ClientServerHelper.GetTimeStamp();
             if (this.Session != null)
             {
-                dictionary["iden"] = this.Session;
+                dictionary[ProtocolStrings.SessionField] = this.Session;
             }
 
             return new Message(dictionary);

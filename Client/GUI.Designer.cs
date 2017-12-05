@@ -60,7 +60,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(921, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(930, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -82,14 +82,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.infoToolStripMenuItem.Text = "Info";
             // 
             // PortLabel
@@ -239,6 +239,7 @@
             // 
             this.OstatnieKomunikatyWypiszTextBox.Location = new System.Drawing.Point(511, 68);
             this.OstatnieKomunikatyWypiszTextBox.Name = "OstatnieKomunikatyWypiszTextBox";
+            this.OstatnieKomunikatyWypiszTextBox.ReadOnly = true;
             this.OstatnieKomunikatyWypiszTextBox.Size = new System.Drawing.Size(398, 223);
             this.OstatnieKomunikatyWypiszTextBox.TabIndex = 17;
             this.OstatnieKomunikatyWypiszTextBox.Text = "";
@@ -258,7 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(921, 463);
+            this.ClientSize = new System.Drawing.Size(930, 463);
             this.Controls.Add(this.Domyslnie3LiczbyCheckBox);
             this.Controls.Add(this.OstatnieKomunikatyWypiszTextBox);
             this.Controls.Add(this.RozlaczButton);
