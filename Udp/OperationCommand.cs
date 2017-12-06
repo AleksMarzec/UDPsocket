@@ -56,13 +56,13 @@ namespace Udp
             {
                 this.Operation = "mnozenie";
             }
-            else if (input == "logiczne \"lub\"")
+            else if (input == "bitowe \"lub\"")
             {
-                this.Operation = "logicznelub";
+                this.Operation = "bitowelub";
             }
-            else if (input == "logiczne \"i\"")
+            else if (input == "bitowe \"i\"")
             {
-                this.Operation = "logicznei";
+                this.Operation = "bitowei";
             }
             else
             {

@@ -95,16 +95,17 @@
             // PortLabel
             // 
             this.PortLabel.AutoSize = true;
+            this.PortLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.PortLabel.Location = new System.Drawing.Point(12, 45);
             this.PortLabel.Name = "PortLabel";
-            this.PortLabel.Size = new System.Drawing.Size(29, 13);
+            this.PortLabel.Size = new System.Drawing.Size(38, 16);
             this.PortLabel.TabIndex = 1;
             this.PortLabel.Text = "Port:";
             this.PortLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // PortTextBox
             // 
-            this.PortTextBox.Location = new System.Drawing.Point(89, 42);
+            this.PortTextBox.Location = new System.Drawing.Point(89, 44);
             this.PortTextBox.Name = "PortTextBox";
             this.PortTextBox.Size = new System.Drawing.Size(100, 20);
             this.PortTextBox.TabIndex = 2;
@@ -113,9 +114,10 @@
             // IpAddressLabel
             // 
             this.IpAddressLabel.AutoSize = true;
+            this.IpAddressLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.IpAddressLabel.Location = new System.Drawing.Point(12, 81);
             this.IpAddressLabel.Name = "IpAddressLabel";
-            this.IpAddressLabel.Size = new System.Drawing.Size(50, 13);
+            this.IpAddressLabel.Size = new System.Drawing.Size(65, 16);
             this.IpAddressLabel.TabIndex = 3;
             this.IpAddressLabel.Text = "Adres IP:";
             this.IpAddressLabel.Click += new System.EventHandler(this.label2_Click);
@@ -131,9 +133,10 @@
             // OperacjaLabel
             // 
             this.OperacjaLabel.AutoSize = true;
-            this.OperacjaLabel.Location = new System.Drawing.Point(12, 240);
+            this.OperacjaLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.OperacjaLabel.Location = new System.Drawing.Point(9, 238);
             this.OperacjaLabel.Name = "OperacjaLabel";
-            this.OperacjaLabel.Size = new System.Drawing.Size(53, 13);
+            this.OperacjaLabel.Size = new System.Drawing.Size(70, 16);
             this.OperacjaLabel.TabIndex = 5;
             this.OperacjaLabel.Text = "Operacja:";
             this.OperacjaLabel.Click += new System.EventHandler(this.label3_Click);
@@ -144,8 +147,8 @@
             this.OperacjaComboBox.Items.AddRange(new object[] {
             "dodawanie",
             "mnożenie",
-            "logiczne lub",
-            "logiczne i"});
+            "bitowe \"lub\"",
+            "bitowe \"i\""});
             this.OperacjaComboBox.Location = new System.Drawing.Point(89, 237);
             this.OperacjaComboBox.Name = "OperacjaComboBox";
             this.OperacjaComboBox.Size = new System.Drawing.Size(121, 21);
@@ -154,9 +157,10 @@
             // LiczbyLabel
             // 
             this.LiczbyLabel.AutoSize = true;
-            this.LiczbyLabel.Location = new System.Drawing.Point(12, 278);
+            this.LiczbyLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LiczbyLabel.Location = new System.Drawing.Point(9, 278);
             this.LiczbyLabel.Name = "LiczbyLabel";
-            this.LiczbyLabel.Size = new System.Drawing.Size(40, 13);
+            this.LiczbyLabel.Size = new System.Drawing.Size(53, 16);
             this.LiczbyLabel.TabIndex = 7;
             this.LiczbyLabel.Text = "Liczby:";
             // 
@@ -171,18 +175,20 @@
             // OstatniKomunikatCheckBox
             // 
             this.OstatniKomunikatCheckBox.AutoSize = true;
-            this.OstatniKomunikatCheckBox.Location = new System.Drawing.Point(302, 277);
+            this.OstatniKomunikatCheckBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.OstatniKomunikatCheckBox.Location = new System.Drawing.Point(300, 275);
             this.OstatniKomunikatCheckBox.Name = "OstatniKomunikatCheckBox";
-            this.OstatniKomunikatCheckBox.Size = new System.Drawing.Size(111, 17);
+            this.OstatniKomunikatCheckBox.Size = new System.Drawing.Size(133, 20);
             this.OstatniKomunikatCheckBox.TabIndex = 9;
             this.OstatniKomunikatCheckBox.Text = "Ostatni komunikat";
             this.OstatniKomunikatCheckBox.UseVisualStyleBackColor = true;
             // 
             // WyslijButton
             // 
+            this.WyslijButton.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.WyslijButton.Location = new System.Drawing.Point(89, 310);
             this.WyslijButton.Name = "WyslijButton";
-            this.WyslijButton.Size = new System.Drawing.Size(259, 23);
+            this.WyslijButton.Size = new System.Drawing.Size(259, 31);
             this.WyslijButton.TabIndex = 10;
             this.WyslijButton.Text = "Wyślij";
             this.WyslijButton.UseVisualStyleBackColor = true;
@@ -191,32 +197,37 @@
             // WynikLabel
             // 
             this.WynikLabel.AutoSize = true;
-            this.WynikLabel.Location = new System.Drawing.Point(15, 386);
+            this.WynikLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.WynikLabel.Location = new System.Drawing.Point(8, 386);
             this.WynikLabel.Name = "WynikLabel";
-            this.WynikLabel.Size = new System.Drawing.Size(40, 13);
+            this.WynikLabel.Size = new System.Drawing.Size(62, 19);
             this.WynikLabel.TabIndex = 11;
             this.WynikLabel.Text = "Wynik:";
             // 
             // WynikOdpowiedzLabel
             // 
             this.WynikOdpowiedzLabel.AutoSize = true;
-            this.WynikOdpowiedzLabel.Location = new System.Drawing.Point(57, 386);
+            this.WynikOdpowiedzLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.WynikOdpowiedzLabel.Location = new System.Drawing.Point(85, 386);
             this.WynikOdpowiedzLabel.Name = "WynikOdpowiedzLabel";
-            this.WynikOdpowiedzLabel.Size = new System.Drawing.Size(16, 13);
+            this.WynikOdpowiedzLabel.Size = new System.Drawing.Size(24, 19);
             this.WynikOdpowiedzLabel.TabIndex = 12;
             this.WynikOdpowiedzLabel.Text = "---";
             // 
             // OstatnieKomunikatyLabel
             // 
             this.OstatnieKomunikatyLabel.AutoSize = true;
-            this.OstatnieKomunikatyLabel.Location = new System.Drawing.Point(508, 42);
+            this.OstatnieKomunikatyLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.OstatnieKomunikatyLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(56)))), ((int)(((byte)(44)))));
+            this.OstatnieKomunikatyLabel.Location = new System.Drawing.Point(486, 42);
             this.OstatnieKomunikatyLabel.Name = "OstatnieKomunikatyLabel";
-            this.OstatnieKomunikatyLabel.Size = new System.Drawing.Size(106, 13);
+            this.OstatnieKomunikatyLabel.Size = new System.Drawing.Size(141, 16);
             this.OstatnieKomunikatyLabel.TabIndex = 13;
             this.OstatnieKomunikatyLabel.Text = "Ostatnie komunikaty:";
             // 
             // PolaczButton
             // 
+            this.PolaczButton.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.PolaczButton.Location = new System.Drawing.Point(89, 127);
             this.PolaczButton.Name = "PolaczButton";
             this.PolaczButton.Size = new System.Drawing.Size(259, 23);
@@ -227,9 +238,11 @@
             // 
             // RozlaczButton
             // 
-            this.RozlaczButton.Location = new System.Drawing.Point(511, 310);
+            this.RozlaczButton.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.RozlaczButton.ForeColor = System.Drawing.Color.Black;
+            this.RozlaczButton.Location = new System.Drawing.Point(489, 310);
             this.RozlaczButton.Name = "RozlaczButton";
-            this.RozlaczButton.Size = new System.Drawing.Size(256, 23);
+            this.RozlaczButton.Size = new System.Drawing.Size(420, 23);
             this.RozlaczButton.TabIndex = 16;
             this.RozlaczButton.Text = "Rozłącz";
             this.RozlaczButton.UseVisualStyleBackColor = true;
@@ -237,19 +250,22 @@
             // 
             // OstatnieKomunikatyWypiszTextBox
             // 
-            this.OstatnieKomunikatyWypiszTextBox.Location = new System.Drawing.Point(511, 68);
+            this.OstatnieKomunikatyWypiszTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(167)))), ((int)(((byte)(140)))));
+            this.OstatnieKomunikatyWypiszTextBox.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.OstatnieKomunikatyWypiszTextBox.Location = new System.Drawing.Point(489, 68);
             this.OstatnieKomunikatyWypiszTextBox.Name = "OstatnieKomunikatyWypiszTextBox";
             this.OstatnieKomunikatyWypiszTextBox.ReadOnly = true;
-            this.OstatnieKomunikatyWypiszTextBox.Size = new System.Drawing.Size(398, 223);
+            this.OstatnieKomunikatyWypiszTextBox.Size = new System.Drawing.Size(420, 223);
             this.OstatnieKomunikatyWypiszTextBox.TabIndex = 17;
             this.OstatnieKomunikatyWypiszTextBox.Text = "";
             // 
             // Domyslnie3LiczbyCheckBox
             // 
             this.Domyslnie3LiczbyCheckBox.AutoSize = true;
-            this.Domyslnie3LiczbyCheckBox.Location = new System.Drawing.Point(15, 190);
+            this.Domyslnie3LiczbyCheckBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Domyslnie3LiczbyCheckBox.Location = new System.Drawing.Point(12, 202);
             this.Domyslnie3LiczbyCheckBox.Name = "Domyslnie3LiczbyCheckBox";
-            this.Domyslnie3LiczbyCheckBox.Size = new System.Drawing.Size(207, 17);
+            this.Domyslnie3LiczbyCheckBox.Size = new System.Drawing.Size(252, 20);
             this.Domyslnie3LiczbyCheckBox.TabIndex = 18;
             this.Domyslnie3LiczbyCheckBox.Text = "Domyślnie wysyłaj 3 liczby/komunikat.";
             this.Domyslnie3LiczbyCheckBox.UseVisualStyleBackColor = true;
@@ -259,6 +275,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(216)))), ((int)(((byte)(173)))));
             this.ClientSize = new System.Drawing.Size(930, 463);
             this.Controls.Add(this.Domyslnie3LiczbyCheckBox);
             this.Controls.Add(this.OstatnieKomunikatyWypiszTextBox);

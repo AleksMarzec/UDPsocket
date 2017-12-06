@@ -75,7 +75,7 @@ namespace Server
                     string status;
                     request.Fields.TryGetValue(ProtocolStrings.RequestField, out status);
 
-                    if (status != null && status == ProtocolStrings.ResponseFieldHelloAction)
+                    if (status != null && status == ProtocolStrings.RequestFieldHelloAction)
                     {
                         message.Fields[ProtocolStrings.ResponseField] = ProtocolStrings.ResponseFieldHelloAction;
                         SessionRestart(identifier);
@@ -87,6 +87,10 @@ namespace Server
                     request.Fields.TryGetValue(ProtocolStrings.OperationField, out operation);
                     if (operation != null)
                     {
+                        if (operation != this.Operation)
+                        {
+                            this.Nums.Clear();
+                        }
                         this.Operation = operation;
                     }
 
@@ -138,13 +142,13 @@ namespace Server
                                 {
                                     result = Multiplication();
                                 }
-                                else if (operationparse == "logicznelub")
+                                else if (operationparse == "bitowelub")
                                 {
-                                    result = LogicOr();
+                                    result = BitwiseOr();
                                 }
-                                else if (operationparse == "logicznei")
+                                else if (operationparse == "bitowei")
                                 {
-                                    result = LogicAnd();
+                                    result = BitwiseAnd();
                                 }
                                 else
                                 {
@@ -205,7 +209,7 @@ namespace Server
             return result;
         }
 
-        private int LogicOr()
+        private int BitwiseOr()
         {
             int result = 0;
 
@@ -217,7 +221,7 @@ namespace Server
             return result;
         }
 
-        private int LogicAnd()
+        private int BitwiseAnd()
         {
             int result = 1;
 
