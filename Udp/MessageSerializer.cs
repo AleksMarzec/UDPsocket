@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Udp
 {
+    // Klasa odpowiedzialna za "serializację" komunikatu.
+    // Konweruje obiekt Message na string i na odwrót.
     public class MessageSerializer
     {
         public static bool UseJson { get; } = false;
@@ -59,9 +62,11 @@ namespace Udp
 
             foreach (var value in message.Fields)
             {
+                // TO DO
                 //StringBuilder builder = new StringBuilder();
                 //builder.Append(EscapeText(value.Key)).Append(MessageSerializer.KeyValueSeparator).Append(EscapeText(message.Fields[value.Value]));
                 //fields.Add(builder.ToString());
+                //fields.Add($"{EscapeText(value.Key)}{KeyValueSeparator.ToString()}{EscapeText(value.Value)}");
                 fields.Add($"{value.Key}{KeyValueSeparator.ToString()}{value.Value}");
             }
             result = String.Join(MessageSerializer.FieldSeparator.ToString(), fields);
@@ -89,11 +94,13 @@ namespace Udp
             return result;
         }
 
+        // Źródło: https://stackoverflow.com/a/31362213
         public static string EscapeText(string text)
         {
             return System.Uri.EscapeDataString(text);
         }
 
+        // Źródło: https://stackoverflow.com/a/31362213
         public static string UnescapeText(string text)
         {
             return System.Uri.UnescapeDataString(text);

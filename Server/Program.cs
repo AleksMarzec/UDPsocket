@@ -12,15 +12,13 @@ namespace Server
     {
         public static void Main(string[] args)
         {
-            string portString = "8888";
-            bool verbose = false;
+            string portString = "40000";
             bool version = false;
             bool help = false;
             OptionSet options = new OptionSet()
             {
                 {"p|port=", string.Format("Port number(default={0}.", portString), option => portString = option },
-                { "v|verbose", "Enable verbose mode.", option => verbose = option != null},
-                { "V|version", "Show program version.", option => version = option != null},
+                {"v|version", "Show program version.", option => version = option != null},
                 {"h|help", "Prints out the options.", option => help = option != null }
             };
 
@@ -28,7 +26,7 @@ namespace Server
 
             try
             {
-                // Parse the command line.
+                // Parsowanie wiersza poleceń.
                 extra = options.Parse(args);
             }
             catch (OptionException ex)
@@ -39,6 +37,7 @@ namespace Server
                 Environment.Exit(1);
             }
 
+            // Jeśli za dużo wybranych opcji.
             if (extra.Count > 0)
             {
                 Console.Error.WriteLine("Unexpected arguments:");
@@ -51,12 +50,14 @@ namespace Server
                 Environment.Exit(0);
             }
 
+            // Wyświetlenie pomocy programu.
             if (help)
             {
                 PrintHelp(options, Console.Out);
                 Environment.Exit(0);
             }
 
+            // Wyświetlenie wersji programu.
             if (version)
             {
                 PrintProgramInfo(Console.Out);
@@ -64,12 +65,12 @@ namespace Server
             }
 
             int status = 0;
-            System.Net.IPAddress address = System.Net.IPAddress.Any;
+            System.Net.IPAddress address = System.Net.IPAddress.Any; // Serwer ma nasłuchiwać na każdym dostępnym interfejsie sieciowym.
             int port = default(int);
 
             try
             {
-                port = Int32.Parse(portString);
+                port = Int32.Parse(portString); // Parsowanie numeru portu.
             }
             catch (Exception ex)
             {
@@ -83,6 +84,7 @@ namespace Server
                 status = 1;
             }
 
+            // Jeśli wystąpił błąd podczas parsowania wyświetl pomoc programu.
             if (status != 0)
             {
                 PrintHelp(options, Console.Out);

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F51DC25-036E-451B-90DC-6033FF2BEEB6}</ProjectGuid>
+    <ProjectGuid>{CA91CEB7-B025-421C-BFD5-26606F50E86B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Server</RootNamespace>
     <AssemblyName>Server</AssemblyName>
@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Udp\Udp.csproj">
-      <Project>{bf704084-6529-43c9-a887-d791dcfc620a}</Project>
+      <Project>{b5790ac5-3438-47f8-b3e9-335ba579065f}</Project>
       <Name>Udp</Name>
     </ProjectReference>
   </ItemGroup>

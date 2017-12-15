@@ -8,15 +8,14 @@ namespace Udp
 {
     public abstract class ClientServerHandler
     {
-        // Session name
-        public string Session { get; protected set; } = null;
+        public string Session { get; protected set; } = null; // Nazwa sesji.
 
         public ClientServerHandler(string session = null)
         {
             this.Session = session;
         }
 
-        // Resets session
+        // Resetowanie sesji.
         protected virtual void SessionRestart(string session = null)
         {
             this.Session = session;

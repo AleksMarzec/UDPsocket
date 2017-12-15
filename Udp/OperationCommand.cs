@@ -30,6 +30,7 @@ namespace Udp
             this.Nums = nums;
         }
 
+        // Parsowanie liczb z TextBoxa.
         public void ParseInputNums(string input)
         {
             string[] strs = input.Split(' ');
@@ -45,6 +46,7 @@ namespace Udp
             }
         }
 
+        // Parsowanie typu operacji jaka ma być wykonana na liczbach.
         public void ParseInputOperation(string input)
         {
             input.ToLower();

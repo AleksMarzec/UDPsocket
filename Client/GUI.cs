@@ -6,16 +6,16 @@ namespace Client
 {
     public partial class GUI : Form
     {
-        private string IpAddressString { get; set; } = "127.0.0.1";
+        private string IpAddressString { get; set; }
         private System.Net.IPAddress IpAddress { get; set; }
-        private int Port { get; set; } = 8888;
+        private int Port { get; set; }
         private ClientUdp Client { get; set; }
-        private bool Connected { get; set; }
-        private bool Max3Numbers { get; set; }
+        private bool Connected { get; set; } // Zmienia wartość w zależności od akcji podejmwanych przez użytkownika.
+        private bool Max3Numbers { get; set; } // Jeśli zaznaczona opcja wysyłania 3 liczb i odbierania ostatecznego wyniku to pole "end" przybiera automatycznie wartość true.
 
 
 
-        public GUI(string ipaddress = "127.0.0.1", int port = 8888)
+        public GUI(string ipaddress = "127.0.0.1", int port = 40000)
         {
             InitializeComponent();
             this.IpAddressString = ipaddress;
@@ -25,11 +25,13 @@ namespace Client
             this.Max3Numbers = false;
         }
 
-
+        // Obsługa przycisku "połącz".
         private void PolaczButton_Click(object sender, EventArgs e)
         {
             try
             {
+                // Sprawdzanie czy adres IP oraz port są takie same jak domyślnie wiadomości.
+                // Jeśli nie - parsuje.
                 if (PortTextBox.Text != this.Port.ToString())
                 {
                     ParseUserInputPort();
@@ -40,6 +42,7 @@ namespace Client
                     ParseUserInputIpAddress();
                 }
 
+                // Obsługa błędu w przypadku, gdy użytkownik jest już połączony i ponownie wybiera "Połącz".
                 if (this.Connected)
                 {
                     DialogResult dialogResult = MessageBox.Show("Czy na pewno chcesz zresetować sesję?\nWszystkie dane umieszczone na serwerze zostaną usuniete.", "Ostrzeżenie", MessageBoxButtons.YesNo);
@@ -50,6 +53,7 @@ namespace Client
                     }
                 }
 
+                // Łączenie z serwerem. Wysłanie komunikatu powitalnego.
                 this.Client = new ClientUdp(this.IpAddress, this.Port);
                 this.Connected = true;
                 Tuple<string, string> packetsTuple = this.Client.Connect();
@@ -67,18 +71,23 @@ namespace Client
             }
         }
 
+        // Obsługa przycisku "wyślij".
         private void WyslijButton_Click(object sender, EventArgs e)
         {
             try
             {
+                // Obsługa błędu. Niepołączony klient chce wysłać wiadomość.
                 if (!Connected)
                 {
                     MessageBox.Show("Musisz być połączony z serwerem, aby wykonać operacje.", "Błąd połączenia");
                     return;
                 }
 
+                // Parsowanie danych podanych przez użytkownika.
                 OperationCommand parameters = new OperationCommand();
-                parameters.ParseInputNums(LiczbyTextBox.Text);
+                parameters.ParseInputNums(LiczbyTextBox.Text); // Liczby.
+
+                // Obsługa błędu. Klient mając zaznaczoną opcję max 3 argumentów wpisuje ich więcej.
                 if (Max3Numbers && parameters.NumsLength != 3)
                 {
                     MessageBox.Show("Musisz wysłać dokładnie 3 liczby.\n" +
@@ -86,26 +95,22 @@ namespace Client
                     return;
                 }
 
+                // Obsługa błęduw. Brak argumentów liczbowych.
                 if (string.IsNullOrEmpty(OperacjaComboBox.Text))
                 {
                     MessageBox.Show("Przed wysłaniem wybierz operację na liczbach jaką chcesz wykonać.", "Błąd operacji");
                     return;
                 }
 
-                parameters.ParseInputOperation(OperacjaComboBox.Text.ToString());
+                parameters.ParseInputOperation(OperacjaComboBox.Text.ToString()); // Parsowanie operacji.
 
-                if (OstatniKomunikatCheckBox.Checked)
+                if (OstatniKomunikatCheckBox.Checked || Max3Numbers) // Parsowanie - czy zwrócić wynik ostateczny.
                 {
                     parameters.End = true;
                 }
                 else
                 {
                     parameters.End = false;
-                }
-
-                if (Max3Numbers)
-                {
-                    parameters.End = true;
                 }
 
                 Tuple<string, string, string> packetsTuple = this.Client.Run(parameters);
@@ -123,8 +128,10 @@ namespace Client
             }
         }
 
+        // Obsługa przycisku "rozłącz".
         private void RozlaczButton_Click(object sender, EventArgs e)
         {
+            // Obsługa błędu. Niepołączony klient chce rozłączyć się z serwerem.
             if (!this.Connected)
             {
                 MessageBox.Show("Nie jesteś połączony z serwerem.");
@@ -138,6 +145,7 @@ namespace Client
             }
         }
 
+        // Obsługa CheckBoxa max 3 argumentów.
         private void Domyslnie3LiczbyCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (Domyslnie3LiczbyCheckBox.Checked)
@@ -150,6 +158,7 @@ namespace Client
             }
         }
 
+        // Parsowanie portu podanego przez klienta.
         private void ParseUserInputPort()
         {
             int port = 0;
@@ -169,6 +178,7 @@ namespace Client
             this.Port = port;
         }
 
+        // Parsowanie adresu IP podanego przez klienta.
         private void ParseUserInputIpAddress()
         {
             try
@@ -196,29 +206,29 @@ namespace Client
 
         }
 
+        // Obsługa wyjścia z programu.
         private void GUI_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Ostrzeżenie.
             if (MessageBox.Show("Czy na pewno chcesz wyjść z aplikacji?\nJeśli jesteś połączony z serwerem zostaniesz automatycznie rozłączony.", "Zamykanie aplikacji", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
-                if (this.Connected)
+                e.Cancel = true;
+            }
+            else
+            {
+                if (this.Connected) // Jeśli klient połączny z serwerem - prawidłowo zakończ sesję. 
                 {
                     this.RozlaczButton_Click(sender, e);
                     this.Connected = false;
                 }
-
-                e.Cancel = true;
             }
-
         }
 
+        // TODO
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Udp.Program.GetProgramName() + Udp.Program.GetProgramVersion() + Udp.Program.GetProgramInfo());
-        }
-
-        private void LiczbyTextBox_TextChanged(object sender, EventArgs e)
-        {
-
+            MessageBox.Show("Uruchamianie wirus.exe");
+            MessageBox.Show("Twój komputer został poprawnie shakowany.\nCała historia przeglądarki i DNSy zostały przesłane Karaczanowi.");
         }
     }
 }

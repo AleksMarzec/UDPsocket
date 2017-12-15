@@ -9,6 +9,7 @@ namespace Client
 {
     public class ServerHandler : ClientServerHandler
     {
+        // Licznik, numer identyfikacyjny komunikatu, inkrementowany przy tworzeniu każdego komunikatu.
         public int Counter { get; protected set; } = 0;
 
         public ServerHandler(string session = null) : base(session)
@@ -16,17 +17,20 @@ namespace Client
             this.Counter = 0;
         }
 
+        // Resetuje sesję.
         protected override void SessionRestart(string session = null)
         {
             base.SessionRestart(session);
             this.Counter = 0;
         }
 
+        // Rozpoczyna sesję zachowując poprzedni identyfikator.
         public Message CreateMessageBegin()
         {
             return CreateMessageBegin(this.Session);
         }
 
+        // Rozpoczyna sesję posługując się podanym identyfikatorem.
         public Message CreateMessageBegin(string session)
         {
             SessionRestart(session);
@@ -35,6 +39,7 @@ namespace Client
             return message;
         }
 
+        // Kończy sesję.
         public Message CreateMessageEnd()
         {
             Message message = CreateMessageRequest();
@@ -43,6 +48,7 @@ namespace Client
             return message;
         }
 
+        // Tworzy szkielet komunikatu z zapytaniem.
         protected Message CreateMessageRequest()
         {
             this.Counter++;
@@ -51,6 +57,7 @@ namespace Client
             return message;
         }
 
+        // Tworzy komunikat z zapytaniem o operację.
         public Message CreateMessageRequest(OperationCommand cmd)
         {
             Message message = CreateMessageRequest();
@@ -68,7 +75,7 @@ namespace Client
             }
 
             message.Fields[ProtocolStrings.RequestField] = ProtocolStrings.RequestFieldOperationAction;
-            message.Fields["end"] = cmd.End.ToString();
+            message.Fields[ProtocolStrings.End] = cmd.End.ToString();
 
             return message;
         }

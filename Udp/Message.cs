@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Udp
 {
-    // This class represents single package
+    // Klasa reprezentująca pojedynczy komunikat.
     public class Message
     {
         public Dictionary<string, string> Fields { get; set; }

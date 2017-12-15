@@ -37,6 +37,9 @@ namespace Udp
         // Pole błędu
         public static string ErrorField { get; } = "blad";
 
+        // Pole podania wyiku statecznego
+        public static string End { get; } = "knec";
+
 
         // Akcja powitania dla pola żądania (od klienta)
         public static string RequestFieldHelloAction { get; } = "helloserver";

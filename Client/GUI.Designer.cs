@@ -109,7 +109,7 @@
             this.PortTextBox.Name = "PortTextBox";
             this.PortTextBox.Size = new System.Drawing.Size(100, 20);
             this.PortTextBox.TabIndex = 2;
-            this.PortTextBox.Text = "8888";
+            this.PortTextBox.Text = "40000";
             // 
             // IpAddressLabel
             // 
@@ -170,7 +170,6 @@
             this.LiczbyTextBox.Name = "LiczbyTextBox";
             this.LiczbyTextBox.Size = new System.Drawing.Size(179, 20);
             this.LiczbyTextBox.TabIndex = 8;
-            this.LiczbyTextBox.TextChanged += new System.EventHandler(this.LiczbyTextBox_TextChanged);
             // 
             // OstatniKomunikatCheckBox
             // 
